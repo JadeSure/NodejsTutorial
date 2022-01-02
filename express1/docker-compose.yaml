@@ -1,0 +1,25 @@
+verson: '3'
+services:
+  server:
+    build: .
+    ports:
+      - 3000:3000
+    container_name: jr-cm-14_server.
+    depends_on:
+      - mongo
+    tty: true
+
+    volumnes:
+      - 。/：/app
+    # env_file: .env
+    environment:
+      - JWT_KEY=secret
+      - CONNEECTION_STRING=mongodb://mongo/jr-cms
+
+    command: >
+      sh -c "cd /app && rm -rf node-modules && npm i && npm run dev"
+  mongo:
+    image: mongo:4
+    ports:
+      - 27017:27017
+    container_name: jr-cm-14_mongo
